@@ -43,3 +43,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# public/ é a raiz publicada no Firebase Hosting: index.html (menu) fica versionado,
+# as subpastas com o build de cada aula sao geradas e nao versionadas
+/public/*
+!/public/index.html
+
+# cache local de deploy do Firebase CLI
+/.firebase/
