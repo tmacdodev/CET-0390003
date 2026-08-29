@@ -34,6 +34,11 @@ Não há configuração de CI, nem regras de lint customizadas além das padrão
 `package:flutter_lints/flutter.yaml`, e atualmente não há suíte de testes — o `analysis_options.yaml`
 exclui `build/`, `android/`, `ios/`, `web/`, `windows/`, `macos/`, `linux/` da análise.
 
+## Convenções de commit
+
+Não incluir os trailers `Co-Authored-By: Claude ...` / `Claude-Session: ...` nas mensagens de commit
+deste repositório — o usuário pediu para manter o histórico do GitHub sem co-autoria do Claude.
+
 ## Notas de arquitetura
 
 - Estrutura padrão multiplataforma do Flutter (`android/`, `ios/`, `linux/`, `macos/`, `windows/`,
