@@ -30,7 +30,7 @@ class MainApp extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Dio().post(
-                    "https://cet390of003-default-rtdb.firebaseio.com/.json",
+                    "https://tm-cet-aulas-default-rtdb.firebaseio.com/.json",
                     data: {"nome": "T Machado"},
                   );
                 },
@@ -38,7 +38,7 @@ class MainApp extends StatelessWidget {
               ),
               SizedBox(height: 20),
               ElevatedButton(onPressed: () {
-                Dio().put("https://cet390of003-default-rtdb.firebaseio.com/01/.json",
+                Dio().put("https://tm-cet-aulas-default-rtdb.firebaseio.com/01/.json",
                     data: {"nome": "Capibaribe"},);
               }, child: Text("PUT")),
               SizedBox(height: 20),
