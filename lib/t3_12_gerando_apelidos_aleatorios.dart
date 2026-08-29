@@ -30,6 +30,8 @@ class NicknameGenerator extends StatefulWidget {
 class _NicknameGeneratorState extends State<NicknameGenerator> {
   TextEditingController _nameController = TextEditingController();
 
+  String _generoSelecionado = "Feminino";
+
   String _nickname = "Seu apelido aparecerá aqui!";
 
   List _prefixos = [
@@ -43,10 +45,20 @@ class _NicknameGeneratorState extends State<NicknameGenerator> {
     "Forte",
   ];
 
-  List _sufixos = [
+  List _sufixosMasculinos = [
     "Poderoso",
     "Valente",
     "Vaidoso",
+    "Imbatível",
+    "Implacável",
+    "Sorridente",
+    "Feroz",
+  ];
+
+  List _sufixosFemininos = [
+    "Poderosa",
+    "Valente",
+    "Vaidosa",
     "Imbatível",
     "Implacável",
     "Sorridente",
@@ -60,13 +72,17 @@ class _NicknameGeneratorState extends State<NicknameGenerator> {
       String nome = _nameController.text.trim();
 
       if (nome.isEmpty) {
-        nome = "Ulisses";
+        nome = "Tathiana";
       }
 
-      int indicePrefixo = _random.nextInt(_prefixos.length);
-      int indiceSufixo = _random.nextInt(_sufixos.length);
+      List sufixos = _generoSelecionado == "Feminino"
+          ? _sufixosFemininos
+          : _sufixosMasculinos;
 
-      _nickname = _prefixos[indicePrefixo] + nome + _sufixos[indiceSufixo];
+      int indicePrefixo = _random.nextInt(_prefixos.length);
+      int indiceSufixo = _random.nextInt(sufixos.length);
+
+      _nickname = _prefixos[indicePrefixo] + " " + nome + " " + sufixos[indiceSufixo];
     });
   }
 
@@ -89,6 +105,24 @@ class _NicknameGeneratorState extends State<NicknameGenerator> {
               ),
             ),
 
+            SizedBox(height: 20),
+            DropdownButtonFormField<String>(
+              initialValue: _generoSelecionado,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Gênero',
+              ),
+              items: ['Feminino', 'Masculino']
+                  .map((genero) =>
+                      DropdownMenuItem(value: genero, child: Text(genero)))
+                  .toList(),
+              onChanged: (valor) {
+                setState(() {
+                  _generoSelecionado = valor!;
+                });
+              },
+            ),
+
             Text(
               '$_nickname',
               style: Theme.of(context).textTheme.headlineMedium,
@@ -99,7 +133,7 @@ class _NicknameGeneratorState extends State<NicknameGenerator> {
       floatingActionButton: FloatingActionButton(
         onPressed: _gerarApelido,
         tooltip: 'Gerar Apelido',
-        child: const Icon(Icons.refresh),
+        child: const Icon(Icons.fluorescent_rounded),
       ),
     );
   }
