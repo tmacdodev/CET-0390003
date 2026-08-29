@@ -43,3 +43,75 @@ exclui `build/`, `android/`, `ios/`, `web/`, `windows/`, `macos/`, `linux/` da a
 - Como a maioria dos arquivos em `lib/` define seu próprio `main()`, não assuma que eles se compõem em
   um único app — verifique se um arquivo é de fato importado por `main.dart` antes de tratá-lo como
   código "ativo".
+
+## Roteiro de instalação em computador novo
+
+Passos para deixar o projeto rodando do zero em uma máquina nova.
+
+### macOS / Linux
+
+1. **Instalar o Flutter SDK** (inclui o Dart SDK).
+   - macOS: `brew install --cask flutter` ou baixe em https://docs.flutter.dev/get-started/install.
+   - Garanta que o binário `flutter` está no PATH e rode `flutter doctor` para conferir dependências
+     pendentes (Xcode, Android Studio/SDK, Chrome para suporte web, etc.).
+2. **Instalar o Node.js** (necessário para o Firebase CLI), caso ainda não tenha.
+3. **Instalar o Firebase CLI sem sudo.** Em macOS/Linux o prefix padrão do npm
+   (`/usr/local` ou similar) costuma pertencer ao `root`, e `npm install -g` sem ajuste dá
+   `EACCES`. Não use `sudo npm install -g` — isso deixa arquivos com dono `root` na pasta global e
+   quebra instalações futuras. Em vez disso, redirecione o prefix do npm para uma pasta sua:
+   ```bash
+   mkdir -p ~/.npm-global
+   npm config set prefix '~/.npm-global'
+   echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.zshrc   # ou ~/.bashrc
+   source ~/.zshrc
+   npm install -g firebase-tools
+   ```
+   - Confirme com `firebase --version`.
+   - Alternativa: instalar o Node via `nvm` (que já usa uma pasta do usuário) ou usar o instalador
+     standalone `curl -sL https://firebase.tools | bash`.
+4. **Autenticar no Firebase**: `firebase login` (abre o navegador para login com a conta Google que tem
+   acesso ao projeto `tm-cet-aulas`, referenciado em `.firebaserc`).
+5. **Clonar o repositório**: `git clone https://github.com/tmacdodev/CET-0390003.git`.
+6. **Instalar as dependências do Flutter**: dentro da pasta do projeto, rode `flutter pub get`.
+7. **Verificar a análise estática**: `flutter analyze` (não deve haver erros).
+8. **Rodar o app**:
+   - `flutter run` executa `lib/main.dart` (ponto de entrada real, com chamadas HTTP via `dio`).
+   - `flutter run -t lib/<arquivo_da_aula>.dart` executa uma aula específica isolada.
+   - Se não houver dispositivo/emulador conectado, `flutter run -d chrome` funciona como alvo web.
+9. **(Opcional) Testar o deploy do Firebase Hosting**: `firebase deploy --only hosting` publica o
+   conteúdo de `public/` (ver `firebase.json`). Não rode isso sem confirmar com o responsável pelo
+   projeto, pois afeta o ambiente hospedado real.
+
+### Windows
+
+1. **Instalar o Git** (necessário para clonar o repositório): https://git-scm.com/download/win.
+2. **Instalar o Flutter SDK**:
+   - Baixe o instalador em https://docs.flutter.dev/get-started/install/windows e extraia (ex.: em
+     `C:\src\flutter`, evitando pastas com espaço ou que exijam permissão elevada, como
+     `C:\Program Files`).
+   - Adicione `C:\src\flutter\bin` à variável de ambiente `PATH` do usuário (Painel de Controle →
+     Sistema → Configurações avançadas → Variáveis de Ambiente).
+   - Abra um novo PowerShell/CMD e rode `flutter doctor` para conferir dependências pendentes
+     (Android Studio/SDK, Visual Studio com "Desktop development with C++" se for compilar para
+     Windows desktop, Chrome para suporte web).
+3. **Instalar o Node.js**: baixe o instalador LTS em https://nodejs.org/ (já inclui o `npm` e
+   configura o PATH automaticamente — não costuma haver o problema de permissão do macOS/Linux).
+4. **Instalar o Firebase CLI**: em um PowerShell/CMD comum (sem "Executar como administrador"), rode:
+   ```powershell
+   npm install -g firebase-tools
+   firebase --version
+   ```
+   - Alternativa: baixar o executável standalone `firebase-tools-instant-win.exe` em
+     https://firebase.tools/bin/win/instant/latest, que não depende do Node/npm.
+5. **Autenticar no Firebase**: `firebase login` (abre o navegador para login com a conta Google que
+   tem acesso ao projeto `tm-cet-aulas`, referenciado em `.firebaserc`).
+6. **Clonar o repositório**: `git clone https://github.com/tmacdodev/CET-0390003.git`.
+7. **Instalar as dependências do Flutter**: dentro da pasta do projeto, rode `flutter pub get`.
+8. **Verificar a análise estática**: `flutter analyze` (não deve haver erros).
+9. **Rodar o app**:
+   - `flutter run` executa `lib/main.dart` (ponto de entrada real, com chamadas HTTP via `dio`).
+   - `flutter run -t lib/<arquivo_da_aula>.dart` executa uma aula específica isolada.
+   - Se não houver dispositivo/emulador conectado, `flutter run -d chrome` funciona como alvo web.
+10. **(Opcional) Testar o deploy do Firebase Hosting**: `firebase deploy --only hosting` publica o
+    conteúdo de `public/` (ver `firebase.json`). Não rode isso sem confirmar com o responsável pelo
+    projeto, pois afeta o ambiente hospedado real.
