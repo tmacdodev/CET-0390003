@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
       title: 'Meu Primeiro App',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
-        appBar: AppBar(title: Text('Meu App')),
+        appBar: AppBar(title: Text('Meu App TmMacDev')),
         body: Center(
           child: Text('Hello, World com classe!'),
         ),
