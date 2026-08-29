@@ -34,7 +34,18 @@ class _NicknameGeneratorState extends State<NicknameGenerator> {
 
   String _nickname = "Seu apelido aparecerá aqui!";
 
-  List _prefixos = [
+  List _prefixosFemininos = [
+    "Super",
+    "Mega",
+    "Turbo",
+    "Incrível",
+    "Misteriosa",
+    "Destemida",
+    "Veloz",
+    "Forte"
+  ];
+
+  List _prefixosMasculinos = [
     "Super",
     "Mega",
     "Turbo",
@@ -75,14 +86,17 @@ class _NicknameGeneratorState extends State<NicknameGenerator> {
         nome = "Tathiana";
       }
 
+      List prefixos = _generoSelecionado == "Feminino"
+          ? _prefixosFemininos
+          : _prefixosMasculinos;
       List sufixos = _generoSelecionado == "Feminino"
           ? _sufixosFemininos
           : _sufixosMasculinos;
 
-      int indicePrefixo = _random.nextInt(_prefixos.length);
+      int indicePrefixo = _random.nextInt(prefixos.length);
       int indiceSufixo = _random.nextInt(sufixos.length);
 
-      _nickname = _prefixos[indicePrefixo] + " " + nome + " " + sufixos[indiceSufixo];
+      _nickname = prefixos[indicePrefixo] + " " + nome + " " + sufixos[indiceSufixo];
     });
   }
 
