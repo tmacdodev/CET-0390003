@@ -28,13 +28,16 @@ class CurrencyConverterScreen extends StatefulWidget {
 
 class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
   TextEditingController _controllerReais = TextEditingController();
-  double _cotacao = 5.5;
-  double _resultado = 0;
+  double _cotacao = 5.0;
+  double _taxaExtra = 2.0;
+  double _resultado = 0.0;
+  double _resultadoTaxaExtra = 0.0;
 
   void _converter() {
     setState(() {
       double reais = double.tryParse(_controllerReais.text) ?? 0.0;
       _resultado = reais / _cotacao;
+      _resultadoTaxaExtra = reais / _taxaExtra;
     });
   }
 
@@ -57,7 +60,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
               ),
             ),
             Slider(
-              min: 0.1,
+              min: 1,
               max: 10,
               value: _cotacao,
               onChanged: (double valor) {
@@ -72,6 +75,23 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
               'Valor em Dólar: ${_resultado.toStringAsFixed(2)}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            Slider(
+              min: 1,
+              max: 10,
+              divisions: 90,
+              value: _taxaExtra,
+              onChanged: (double valor) {
+                setState(() {
+                  _taxaExtra = valor;
+                });
+              },
+            ),
+            Text('Taxa Extra: ${_taxaExtra.toStringAsFixed(2)}'),
+            Text(
+              'Dólar Taxa Extra: ${_resultadoTaxaExtra.toStringAsFixed(2)}',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+
           ],
         ),
       ),
